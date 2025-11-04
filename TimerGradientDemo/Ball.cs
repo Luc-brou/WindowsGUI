@@ -23,7 +23,7 @@ namespace BouncyBall2023
         private Color color;
         private ShapeType shape;
 
-        private int tickCount = 0; // count timer ticks
+        private int tickCount = 0;
 
         public Ball(Rectangle mainCanvas)
         {
@@ -50,19 +50,17 @@ namespace BouncyBall2023
             ballBox.X += XVelocity;
             ballBox.Y += YVelocity;
 
-            // bounce off walls
             if (ballBox.Left < mainCanvas.Left || ballBox.Right > mainCanvas.Right)
                 FlipX();
             if (ballBox.Top < mainCanvas.Top || ballBox.Bottom > mainCanvas.Bottom)
                 FlipY();
 
-            // increment tick counter
             tickCount++;
             if (tickCount >= 10)
             {
                 tickCount = 0;
-                shape = RandomShape();   // change shape every 10th tick
-                color = RandomColor();   // optional: also change color
+                shape = RandomShape();
+                color = RandomColor();
             }
         }
 
@@ -98,6 +96,11 @@ namespace BouncyBall2023
         {
             XVelocity = vx;
             YVelocity = vy;
+        }
+
+        public void UpdateCanvas(Rectangle newCanvas)
+        {
+            mainCanvas = newCanvas;
         }
 
         private Color RandomColor()

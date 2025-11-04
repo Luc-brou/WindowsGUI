@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using BouncyBall2023; // reference your Ball class namespace
+using BouncyBall2023;
 
 namespace TimerGradientDemo
 {
@@ -13,23 +13,26 @@ namespace TimerGradientDemo
         public Form1()
         {
             InitializeComponent();
-            DoubleBuffered = true; // reduce flicker
+            DoubleBuffered = true;
 
             // Create a ball inside the form’s client area
             ball = new Ball(this.ClientRectangle);
-
-            // Force velocity to always go left
             ball.SetVelocity(-5, 0);
 
             myTimer.Interval = 30; // ~33 FPS
             myTimer.Tick += TimerEventProcessor;
             myTimer.Start();
+
+            this.DoubleBuffered = true;
+
+            // Update canvas bounds whenever the form is resized
+            this.Resize += Form1_Resize;
         }
 
         private void TimerEventProcessor(object sender, EventArgs e)
         {
             ball.Move();
-            Invalidate(); // trigger repaint
+            Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -41,6 +44,14 @@ namespace TimerGradientDemo
         private void Form1_Load(object sender, EventArgs e)
         {
             // nothing needed here
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (ball != null)
+            {
+                ball.UpdateCanvas(this.ClientRectangle);
+            }
         }
     }
 }
