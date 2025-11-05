@@ -1,4 +1,7 @@
-﻿namespace TimerGradientDemo
+﻿using System;
+using System.Reflection;
+
+namespace BouncyShapes
 {
     partial class Form1
     {
@@ -23,11 +26,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "Form1";
-            this.Text = "Bouncy Ball Demo";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Text = "BouncyShapes Ball Demo";
             this.ResumeLayout(false);
         }
-
         #endregion
     }
 }

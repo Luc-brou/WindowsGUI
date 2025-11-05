@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TimerGradientDemo")]
+[assembly: AssemblyTitle("BouncyShapes")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("NSCC")]
-[assembly: AssemblyProduct("TimerGradientDemo")]
+[assembly: AssemblyProduct("BouncyShapes")]
 [assembly: AssemblyCopyright("Copyright © NSCC 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

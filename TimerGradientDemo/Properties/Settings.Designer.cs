@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TimerGradientDemo.Properties
+namespace BouncyShapes.Properties
 {
 
 

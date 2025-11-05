@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace TimerGradientDemo
+namespace BouncyShapes
 {
     internal static class Program
     {
