@@ -83,5 +83,21 @@ namespace BouncyShapes
             if (x <= 0 || x + width >= panelWidth) velocity[0] *= -1;
             if (y <= 0 || y + height >= panelHeight) velocity[1] *= -1;
         }
+
+        public void ClampToBounds(int panelWidth, int panelHeight)
+        {
+            if (x < 0) x = 0;
+            if (y < 0) y = 0;
+            if (x + width > panelWidth) x = panelWidth - width;
+            if (y + height > panelHeight) y = panelHeight - height;
+
+            // Update bounding box too
+            bx = x;
+            by = y;
+            bwidth = width;
+            bheight = height;
+        }
+
+
     }
 }

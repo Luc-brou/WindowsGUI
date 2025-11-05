@@ -19,7 +19,6 @@ namespace BouncyShapes
 
             // Add a couple of shapes so collisions are visible
             shapes.Add(new CircleShape(100, 100, 50, 50, Color.Blue));
-            //shapes.Add(new RectangleShape(200, 150, 60, 40, Color.Red));
 
             timer = new Timer();
             timer.Interval = 30; // ~33 FPS
@@ -79,5 +78,22 @@ namespace BouncyShapes
             shapes.Add(s);
             clickCount++;
         }
+
+        private const int WM_SIZING = 0x0214;
+
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+
+            if (m.Msg == WM_SIZING)
+            {
+                foreach (var shape in shapes)
+                {
+                    shape.ClampToBounds(this.ClientSize.Width, this.ClientSize.Height);
+                }
+                Invalidate(); // redraw immediately
+            }
+        }
+
     }
 }
