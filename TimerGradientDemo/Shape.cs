@@ -64,8 +64,18 @@ namespace BouncyShapes
         public void initializeVelocity()
         {
             var random = new Random();
-            velocity[0] = random.Next(-3, 3);
-            velocity[1] = random.Next(-3, 3);
+
+            // Ensure X velocity is never zero
+            do
+            {
+                velocity[0] = random.Next(-3, 4); // -3..3 inclusive
+            } while (velocity[0] == 0);
+
+            // Ensure Y velocity is never zero
+            do
+            {
+                velocity[1] = random.Next(-3, 4);
+            } while (velocity[1] == 0);
         }
 
         public void DetectEdge(int panelWidth, int panelHeight)
