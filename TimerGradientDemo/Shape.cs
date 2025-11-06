@@ -4,27 +4,22 @@ using System.Windows.Forms;
 
 namespace BouncyShapes
 {
-    /// <summary>
-    /// Abstract base class for all shapes in the screensaver.
-    /// Handles position, velocity, bounding box, movement, edge detection,
-    /// and collision logic. Subclasses override Draw() to render themselves.
-    /// </summary>
     public abstract class Shape
     {
-        // Position and size
+        // position and size
         protected int x, y, width, height;
 
-        // Visual color
         protected Color color;
 
-        // Velocity vector [vx, vy]
+        // velocity initialized to random velocity
         protected int[] velocity = new int[2];
 
-        // Bounding box for collision detection
+        // bounding box for collision detection
         protected int bx, by, bwidth, bheight;
 
         public Shape(int x, int y, int width, int height, Color color)
         {
+            //itializes shape position, size, and color
             this.x = x;
             this.y = y;
             this.width = width;
@@ -35,40 +30,30 @@ namespace BouncyShapes
             SyncBounds();
         }
 
-        /// <summary>
-        /// Draw the shape. Must be implemented by subclasses.
-        /// </summary>
-        public abstract void Draw(Graphics g, Control drawPanel);
+     
+        public abstract void Draw(Graphics g, Control drawPanel); //method to draw shape
 
-        /// <summary>
-        /// Move the shape according to its velocity.
-        /// </summary>
-        public virtual void Move()
+        public virtual void Move() //method to move shape based on velocity
         {
             x += velocity[0];
             y += velocity[1];
-            SyncBounds();
+            SyncBounds(); //updates bounding box (aka hitbox) after moving
         }
 
-        /// <summary>
-        /// Check if this shape’s bounding box overlaps another’s.
-        /// </summary>
         public bool CollidesWith(Shape other)
         {
+            //handles collision detetction based on other shapes hitbox width and height
             return bx < other.bx + other.bwidth &&
                    bx + bwidth > other.bx &&
                    by < other.by + other.bheight &&
                    by + bheight > other.by;
         }
 
-        /// <summary>
-        /// Handle collision with another shape.
-        /// Default behavior: flip both velocities and separate slightly.
-        /// </summary>
         public virtual void ShapeCollide(Shape other)
         {
             if (this != other && CollidesWith(other))
             {
+                //reverses velocity of both shapes when they collide
                 velocity[0] = -velocity[0];
                 velocity[1] = -velocity[1];
                 other.velocity[0] = -other.velocity[0];
@@ -80,30 +65,21 @@ namespace BouncyShapes
             }
         }
 
-        /// <summary>
-        /// Initialize velocity with non‑zero random values.
-        /// </summary>
-        private void InitializeVelocity()
+        private void InitializeVelocity() //method to initialize velocity to be random
         {
             var random = new Random();
             do { velocity[0] = random.Next(-3, 4); } while (velocity[0] == 0);
             do { velocity[1] = random.Next(-3, 4); } while (velocity[1] == 0);
         }
 
-        /// <summary>
-        /// Bounce off edges of the panel.
-        /// </summary>
-        public virtual void DetectEdge(int panelWidth, int panelHeight)
+        public virtual void DetectEdge(int panelWidth, int panelHeight) //method to detect edges of window
         {
             if (x <= 0 || x + width >= panelWidth) velocity[0] *= -1;
             if (y <= 0 || y + height >= panelHeight) velocity[1] *= -1;
             SyncBounds();
         }
 
-        /// <summary>
-        /// Clamp shape inside panel bounds (used on resize).
-        /// </summary>
-        public void ClampToBounds(int panelWidth, int panelHeight)
+        public void ClampToBounds(int panelWidth, int panelHeight) //method to keep shapes within current window bounds
         {
             if (x < 0) x = 0;
             if (y < 0) y = 0;
@@ -112,22 +88,19 @@ namespace BouncyShapes
             SyncBounds();
         }
 
-        /// <summary>
-        /// Update bounding box to current position/size.
-        /// </summary>
-        protected void SyncBounds()
-        {
+        protected void SyncBounds() // updates this shape's bounding box (hitbox) 
+        {                           //to match its current position and size
             bx = x;
             by = y;
             bwidth = width;
             bheight = height;
         }
 
-        /// <summary>
-        /// Push shapes slightly apart after collision to prevent overlap.
-        /// </summary>
-        protected void SeparateFrom(Shape other)
+        protected void SeparateFrom(Shape other) //method to separate shapes after collision
         {
+            //reverses their velocity a little bit on collision to "bump" them apart
+            //stops the shapes from getting stuck together as much
+            //(still happens if you place a shape directly on top of another shape though)
             x += Math.Sign(velocity[0]);
             y += Math.Sign(velocity[1]);
             other.x += Math.Sign(other.velocity[0]);

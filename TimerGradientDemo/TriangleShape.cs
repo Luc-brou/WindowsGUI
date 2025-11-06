@@ -10,25 +10,26 @@ public class TriangleShape : Shape
 
     public override void Draw(Graphics g, Control surface)
     {
-        // Oscillate growth between 0 and 20 pixels
-        int cycle = (Environment.TickCount / 10) % 40; // 0–39
-        int growth = cycle <= 20 ? cycle : 40 - cycle; // grow then shrink
+        int cycle = (Environment.TickCount / 10) % 40; // 0–39ms cycle
+        int growth = cycle <= 20 ? cycle : 40 - cycle; // grow then shrink cycle
 
-        int newW = width + growth;
-        int newH = height + growth;
+        //below is all the logic to draw the triangle and make it grow and shrink
 
-        var p1 = new Point(x + newW / 2, y);
-        var p2 = new Point(x, y + newH);
-        var p3 = new Point(x + newW, y + newH);
+        int newWidth = width + growth;
+        int newHeight = height + growth;
+
+        var p1 = new Point(x + newWidth / 2, y);
+        var p2 = new Point(x, y + newHeight);
+        var p3 = new Point(x + newWidth, y + newHeight);
         var pts = new[] { p1, p2, p3 };
 
-        using var brush = new SolidBrush(color);
+        using var brush = new SolidBrush(color); //colors the triangle
         g.FillPolygon(brush, pts);
 
-        // Sync bounding box to new size
+        // sync bounding box (hitbox) to new size
         bx = x;
         by = y;
-        bwidth = newW;
-        bheight = newH;
+        bwidth = newWidth;
+        bheight = newHeight;
     }
 }

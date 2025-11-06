@@ -10,14 +10,14 @@ public class RectangleShape : Shape
 
     public override void Draw(Graphics g, Control surface)
     {
-        // Cycle alpha between 0 and 255
-        int cycle = (Environment.TickCount / 10) % 510; // 0–509
-        int alpha = cycle <= 255 ? cycle : 510 - cycle; // fade in then out
+        int cycle = (Environment.TickCount / 10) % 510; // cycle length = 510 steps of 10 ms = 5.1 seconds
+        int alpha = cycle <= 255 ? cycle : 510 - cycle; // fade in to 255, then fade out to 0
+                                                        // whole fade in/out cycle lasts ~5.1 seconds
 
         using var brush = new SolidBrush(Color.FromArgb(alpha, color));
         g.FillRectangle(brush, x, y, width, height);
 
-        // Sync bounding box for collisions
+        // sync bounding box for collisions
         bx = x;
         by = y;
         bwidth = width;
