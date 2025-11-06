@@ -54,10 +54,41 @@ namespace BouncyShapes
         {
             if (this != other && this.CollidesWith(other))
             {
+                // Flip velocities
                 this.velocity[0] = -this.velocity[0];
                 this.velocity[1] = -this.velocity[1];
                 other.velocity[0] = -other.velocity[0];
                 other.velocity[1] = -other.velocity[1];
+
+                // Push them apart along X
+                if (this.bx < other.bx)
+                {
+                    this.x -= 2;
+                    other.x += 2;
+                }
+                else
+                {
+                    this.x += 2;
+                    other.x -= 2;
+                }
+
+                // Push them apart along Y
+                if (this.by < other.by)
+                {
+                    this.y -= 2;
+                    other.y += 2;
+                }
+                else
+                {
+                    this.y += 2;
+                    other.y -= 2;
+                }
+
+                // Update bounding boxes
+                this.bx = this.x;
+                this.by = this.y;
+                other.bx = other.x;
+                other.by = other.y;
             }
         }
 

@@ -59,7 +59,7 @@ namespace BouncyShapes
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
             Shape s;
-            switch (clickCount % 4)
+            switch (clickCount % 5) // now 5 options
             {
                 case 0:
                     s = new CircleShape(e.X, e.Y, 50, 50, Color.Orange);
@@ -70,8 +70,11 @@ namespace BouncyShapes
                 case 2:
                     s = new TriangleShape(e.X, e.Y, 50, 50, Color.Pink);
                     break;
-                default:
+                case 3:
                     s = new PolygonShape(e.X, e.Y, 60, 60, Color.Purple);
+                    break;
+                default:
+                    s = new PictureShape(this, e.X, e.Y, 60, 60, Properties.Resources.imageshape);
                     break;
             }
 
